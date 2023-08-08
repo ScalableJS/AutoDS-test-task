@@ -3,73 +3,53 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { Steps, message, Form } from 'antd';
-import StepPersonalInfo from '../components/StepPersonalInfo';
-import StepAccountInfo from '../components/StepAccountInfo';
-import StepPaymentMethod from '../components/StepPaymentMethod';
+import StepPersonalInfo, {
+    personalInfoSchema,
+} from '../components/StepPersonalInfo';
+import StepAccountInfo, {
+    accountInfoSchema,
+} from '../components/StepAccountInfo';
+import StepPaymentMethod, {
+    paymentMethodSchema,
+} from '../components/StepPaymentMethod';
 import StepNavigationButtons from '../components/StepNavigationButtons';
 
-const schemaStep1 = yup.object({
-    fullName: yup
-        .string()
-        .required('Full Name is required')
-        .matches(
-            /^[a-zA-Z]{3,}\s[a-zA-Z]{3,}$/,
-            'Full Name should contain at least 2 words, each with at least 3 letters and only letters',
-        ),
-});
+const formatFormData = (data) => {
+    const fullNameParts = data.fullName.split(' ');
 
-const schemaStep2 = yup.object({
-    email: yup
-        .string()
-        .required('Email is required')
-        .email('Invalid email format'),
-    password: yup
-        .string()
-        .required('Password is required')
-        .min(8, 'Password must be at least 8 characters')
-        .matches(
-            /^(?=.*[A-Z])(?=.*\d)/,
-            'Password must contain at least one uppercase letter and one digit',
-        ),
-    confirmPassword: yup
-        .string()
-        .required('Confirm Password is required')
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
-});
+    const formattedData = {
+        firstName: fullNameParts[0],
+        lastName: fullNameParts[1],
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        paymentMethod: {},
+    };
 
-const schemaStep3 = yup.object({
-    paymentMethod: yup.string().required('Please select a payment method'),
-    paypalEmail: yup
-        .string()
-        .when('paymentMethod', (paymentMethod, schema) =>
-            paymentMethod[0] === 'pp'
-                ? schema
-                      .required('PayPal Email is required')
-                      .email('Invalid email format')
-                : yup.string().nullable(),
-        ),
-    cardNumber: yup
-        .string()
-        .when('paymentMethod', (paymentMethod, schema) =>
-            paymentMethod[0] === 'cc'
-                ? schema
-                      .required('Credit Card Number is required')
-                      .matches(
-                          /^\d{16}$/,
-                          'Invalid card number. Must be 16 digits',
-                      )
-                : yup.string().nullable(),
-        ),
-});
+    if (data.paymentMethod === 'pp') {
+        formattedData.paymentMethod = {
+            type: 'pp',
+            email: data.paypalEmail,
+        };
+    } else if (data.paymentMethod === 'cc') {
+        formattedData.paymentMethod = {
+            type: 'cc',
+            cardNumber: data.cardNumber,
+        };
+    }
+
+    return formattedData;
+};
 
 const RegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
-    const schema = [schemaStep1, schemaStep2, schemaStep3][currentStep];
+    const schema = [personalInfoSchema, accountInfoSchema, paymentMethodSchema][
+        currentStep
+    ];
 
     const {
         handleSubmit,
         control,
-        getValues,
         formState: { errors },
         watch,
     } = useForm({
@@ -113,7 +93,8 @@ const RegistrationForm = () => {
 
     const onSubmit = (data) => {
         if (currentStep === steps.length - 1) {
-            console.log(data);
+            const formattedData = formatFormData(data);
+            console.log(formattedData);
             message.success('Form submitted successfully!');
         } else {
             nextStep();

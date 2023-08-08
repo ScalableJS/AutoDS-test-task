@@ -28,4 +28,4 @@ const StepNavigationButtons = ({ onBack, currentStep, maxStep }) => {
     );
 };
 
-export default StepNavigationButtons;
+export default React.memo(StepNavigationButtons);
