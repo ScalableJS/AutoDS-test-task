@@ -14,9 +14,7 @@ import StepPaymentMethod, {
 } from '../components/StepPaymentMethod';
 import StepNavigationButtons from '../components/StepNavigationButtons';
 
-import formatFormData from '../utils/formDataUtils'
-
-
+import formatFormData from '../utils/formDataUtils';
 
 const RegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -31,8 +29,7 @@ const RegistrationForm = () => {
         watch,
     } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: {
-        },
+        defaultValues: {},
     });
 
     // Watch for changes in the paymentMethod field

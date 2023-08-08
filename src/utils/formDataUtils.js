@@ -1,3 +1,4 @@
+import { PaymentMethods } from './constants';
 const formatFormData = (data) => {
     const fullNameParts = data.fullName.split(' ');
 
@@ -10,14 +11,14 @@ const formatFormData = (data) => {
         paymentMethod: {},
     };
 
-    if (data.paymentMethod === 'pp') {
+    if (data.paymentMethod === PaymentMethods.PAYPAL) {
         formattedData.paymentMethod = {
-            type: 'pp',
+            type: PaymentMethods.PAYPAL,
             email: data.paypalEmail,
         };
-    } else if (data.paymentMethod === 'cc') {
+    } else if (data.paymentMethod === PaymentMethods.CREDIT_CARD) {
         formattedData.paymentMethod = {
-            type: 'cc',
+            type: PaymentMethods.CREDIT_CARD,
             cardNumber: data.cardNumber,
         };
     }

@@ -4,13 +4,14 @@ import { Radio, Form } from 'antd';
 import StepPaymentPayPal from './StepPaymentPayPal';
 import StepPaymentCreditCard from './StepPaymentCreditCard';
 import * as yup from 'yup';
+import { PaymentMethods } from '../utils/constants';
 
 export const paymentMethodSchema = yup.object({
     paymentMethod: yup.string().required('Please select a payment method'),
     paypalEmail: yup
         .string()
         .when('paymentMethod', (paymentMethod, schema) =>
-            paymentMethod[0] === 'pp'
+            paymentMethod[0] === PaymentMethods.PAYPAL
                 ? schema
                       .required('PayPal Email is required')
                       .email('Invalid email format')
@@ -19,7 +20,7 @@ export const paymentMethodSchema = yup.object({
     cardNumber: yup
         .string()
         .when('paymentMethod', (paymentMethod, schema) =>
-            paymentMethod[0] === 'cc'
+            paymentMethod[0] === PaymentMethods.CREDIT_CARD
                 ? schema
                       .required('Credit Card Number is required')
                       .matches(
@@ -42,18 +43,20 @@ const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
                     }}
                     render={({ field }) => (
                         <Radio.Group id="paymentMethod" {...field}>
-                            <Radio value="pp">PayPal</Radio>
-                            <Radio value="cc">Credit Card</Radio>
+                            <Radio value={PaymentMethods.PAYPAL}>PayPal</Radio>
+                            <Radio value={PaymentMethods.CREDIT_CARD}>
+                                Credit Card
+                            </Radio>
                         </Radio.Group>
                     )}
                 />
                 {errors.paymentMethod && <p>{errors.paymentMethod.message} </p>}
             </Form.Item>
 
-            {paymentMethod === 'pp' && (
+            {paymentMethod === PaymentMethods.PAYPAL && (
                 <StepPaymentPayPal control={control} errors={errors} />
             )}
-            {paymentMethod === 'cc' && (
+            {paymentMethod === PaymentMethods.CREDIT_CARD && (
                 <StepPaymentCreditCard control={control} errors={errors} />
             )}
         </>
