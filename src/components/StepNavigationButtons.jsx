@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Space } from 'antd';
+import { en } from '../translations/en';
 
 const StepNavigationButtons = ({ onBack, currentStep, maxStep }) => {
     return (
@@ -12,16 +13,16 @@ const StepNavigationButtons = ({ onBack, currentStep, maxStep }) => {
         >
             {currentStep > 0 && (
                 <Button type="default" onClick={onBack}>
-                    Back
+                    {en.back}
                 </Button>
             )}
             {currentStep < maxStep ? (
                 <Button type="primary" htmlType="submit">
-                    Next
+                    {en.next}
                 </Button>
             ) : (
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    {en.submit}
                 </Button>
             )}
         </Space>

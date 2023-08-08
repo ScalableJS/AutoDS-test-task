@@ -41,7 +41,11 @@ const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
     }, [paymentMethod, control, errors]);
     return (
         <>
-            <Form.Item label="Payment Method" htmlFor="paymentMethod" required>
+            <Form.Item
+                label={en.paymentMethod}
+                htmlFor="paymentMethod"
+                required
+            >
                 <Controller
                     name="paymentMethod"
                     control={control}

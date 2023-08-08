@@ -20,7 +20,7 @@ export const accountInfoSchema = yup.object({
 const StepAccountInfo = ({ control, errors }) => {
     return (
         <>
-            <Form.Item label="Email" htmlFor="email">
+            <Form.Item label={en.email} htmlFor="email">
                 <Controller
                     name="email"
                     control={control}
@@ -30,7 +30,7 @@ const StepAccountInfo = ({ control, errors }) => {
                     <Alert message={errors.email.message} type="error" />
                 )}
             </Form.Item>
-            <Form.Item label="Password" htmlFor="password">
+            <Form.Item label={en.password} htmlFor="password">
                 <Controller
                     name="password"
                     control={control}
@@ -42,7 +42,7 @@ const StepAccountInfo = ({ control, errors }) => {
                     <Alert message={errors.password.message} type="error" />
                 )}
             </Form.Item>
-            <Form.Item label="Confirm Password" htmlFor="confirmPassword">
+            <Form.Item label={en.confirmPassword} htmlFor="confirmPassword">
                 <Controller
                     name="confirmPassword"
                     control={control}
