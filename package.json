@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "main": "index.jsx",
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "format": "prettier --write \"src/**/*.jsx\""
+
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2",
@@ -15,6 +17,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "prettier": "^3.0.1",
     "react-scripts": "^5.0.1"
   },
   "browserslist": {

@@ -8,7 +8,8 @@ const StepNavigationButtons = ({ onBack, currentStep, maxStep }) => {
             size="middle"
             style={{
                 display: 'flex',
-            }}>
+            }}
+        >
             {currentStep > 0 && (
                 <Button type="default" onClick={onBack}>
                     Back

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
-import { Input, Alert, Form, Layout } from 'antd';
+import { Input, Alert, Form } from 'antd';
 
 const StepAccountInfo = ({ control, errors }) => {
     return (
@@ -9,25 +9,42 @@ const StepAccountInfo = ({ control, errors }) => {
                 <Controller
                     name="email"
                     control={control}
-                    render={({ field }) => <Input id='email' {...field} />}
+                    render={({ field }) => <Input id="email" {...field} />}
                 />
-                {errors.email && <Alert message={errors.email.message} type="error" />}
+                {errors.email && (
+                    <Alert message={errors.email.message} type="error" />
+                )}
             </Form.Item>
             <Form.Item label="Password" htmlFor="password">
                 <Controller
                     name="password"
                     control={control}
-                    render={({ field }) => <Input id='password' type="password" {...field} />}
+                    render={({ field }) => (
+                        <Input id="password" type="password" {...field} />
+                    )}
                 />
-                {errors.password && <Alert message={errors.password.message} type="error" />}
+                {errors.password && (
+                    <Alert message={errors.password.message} type="error" />
+                )}
             </Form.Item>
             <Form.Item label="Confirm Password" htmlFor="confirmPassword">
                 <Controller
                     name="confirmPassword"
                     control={control}
-                    render={({ field }) => <Input id='confirmPassword' type="password" {...field} />}
+                    render={({ field }) => (
+                        <Input
+                            id="confirmPassword"
+                            type="password"
+                            {...field}
+                        />
+                    )}
                 />
-                {errors.confirmPassword && <Alert message={errors.confirmPassword.message} type="error" />}
+                {errors.confirmPassword && (
+                    <Alert
+                        message={errors.confirmPassword.message}
+                        type="error"
+                    />
+                )}
             </Form.Item>
         </>
     );

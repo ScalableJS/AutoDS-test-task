@@ -2,9 +2,7 @@ import React from 'react';
 import RegistrationForm from './pages/RegistrationForm';
 
 const App = () => {
-    return (
-        <RegistrationForm />
-    );
+    return <RegistrationForm />;
 };
 
 export default App;

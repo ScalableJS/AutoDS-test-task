@@ -10,7 +10,9 @@ const StepPersonalInfo = ({ control, errors }) => (
                 control={control}
                 render={({ field }) => <Input id="fullName" {...field} />}
             />
-            {errors.fullName && <Alert message={errors.fullName.message} type="error" />}
+            {errors.fullName && (
+                <Alert message={errors.fullName.message} type="error" />
+            )}
         </Form.Item>
     </>
 );

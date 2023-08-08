@@ -1,11 +1,10 @@
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Radio, Form } from 'antd';
 import StepPaymentPayPal from './StepPaymentPayPal';
 import StepPaymentCreditCard from './StepPaymentCreditCard';
 
 const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
-
     return (
         <>
             <Form.Item label="Payment Method" htmlFor="paymentMethod" required>
@@ -25,11 +24,14 @@ const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
                 {errors.paymentMethod && <p>{errors.paymentMethod.message} </p>}
             </Form.Item>
 
-            {paymentMethod  === 'pp' && <StepPaymentPayPal control={control} errors={errors} />}
-            {paymentMethod  === 'cc' && <StepPaymentCreditCard control={control} errors={errors} />}
+            {paymentMethod === 'pp' && (
+                <StepPaymentPayPal control={control} errors={errors} />
+            )}
+            {paymentMethod === 'cc' && (
+                <StepPaymentCreditCard control={control} errors={errors} />
+            )}
         </>
-    )
-}
-
+    );
+};
 
 export default StepPaymentMethod;
