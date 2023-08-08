@@ -6,15 +6,7 @@ import StepPaymentCreditCard from './StepPaymentCreditCard';
 import * as yup from 'yup';
 
 export const paymentMethodSchema = yup.object({
-    paymentMethod: yup
-<<<<<<< HEAD
-        .string()
-        .required('Payment Method is required')
-=======
-        .array()
-        .of(yup.string().oneOf(['cc', 'pp'], 'Invalid payment method'))
->>>>>>> 672b0b3d583dee5c0083056362a94e48256e6fde
-        .required('Please select a payment method'),
+    paymentMethod: yup.string().required('Please select a payment method'),
     paypalEmail: yup
         .string()
         .when('paymentMethod', (paymentMethod, schema) =>

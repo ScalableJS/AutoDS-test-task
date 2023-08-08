@@ -14,36 +14,10 @@ import StepPaymentMethod, {
 } from '../components/StepPaymentMethod';
 import StepNavigationButtons from '../components/StepNavigationButtons';
 
-<<<<<<< HEAD
-const formatFormData = (data) => {
-    const fullNameParts = data.fullName.split(' ');
+import formatFormData from '../utils/formDataUtils'
 
-    const formattedData = {
-        firstName: fullNameParts[0],
-        lastName: fullNameParts[1],
-        email: data.email,
-        password: data.password,
-        confirmPassword: data.confirmPassword,
-        paymentMethod: {},
-    };
 
-    if (data.paymentMethod === 'pp') {
-        formattedData.paymentMethod = {
-            type: 'pp',
-            email: data.paypalEmail,
-        };
-    } else if (data.paymentMethod === 'cc') {
-        formattedData.paymentMethod = {
-            type: 'cc',
-            cardNumber: data.cardNumber,
-        };
-    }
 
-    return formattedData;
-};
-
-=======
->>>>>>> 672b0b3d583dee5c0083056362a94e48256e6fde
 const RegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const schema = [personalInfoSchema, accountInfoSchema, paymentMethodSchema][
@@ -58,11 +32,6 @@ const RegistrationForm = () => {
     } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            fullName: 'asd asd',
-            email: 'test@email.com',
-            password: 'aBcd1234',
-            confirmPassword: 'aBcd1234',
-            paymentMethod: 'pp',
         },
     });
 
