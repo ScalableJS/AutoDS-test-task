@@ -13,8 +13,8 @@ import StepPaymentMethod, {
     paymentMethodSchema,
 } from '../components/StepPaymentMethod';
 import StepNavigationButtons from '../components/StepNavigationButtons';
-
 import formatFormData from '../utils/formDataUtils';
+import { en } from '../translations/en';
 
 const RegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -38,15 +38,15 @@ const RegistrationForm = () => {
     const steps = useMemo(
         () => [
             {
-                title: 'Step 1: Personal Info',
+                title: en.step1Title,
                 content: <StepPersonalInfo control={control} errors={errors} />,
             },
             {
-                title: 'Step 2: Account Info',
+                title: en.step2Title,
                 content: <StepAccountInfo control={control} errors={errors} />,
             },
             {
-                title: 'Step 3: Payment Method',
+                title: en.step3Title,
                 content: (
                     <StepPaymentMethod
                         control={control}
@@ -67,7 +67,7 @@ const RegistrationForm = () => {
         if (currentStep === steps.length - 1) {
             const formattedData = formatFormData(data);
             console.log(formattedData);
-            message.success('Form submitted successfully!');
+            message.success(en.formSubmittedSuccess);
         } else {
             nextStep();
         }

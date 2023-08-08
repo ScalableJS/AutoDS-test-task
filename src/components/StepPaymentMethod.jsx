@@ -5,16 +5,17 @@ import StepPaymentPayPal from './StepPaymentPayPal';
 import StepPaymentCreditCard from './StepPaymentCreditCard';
 import * as yup from 'yup';
 import { PaymentMethods } from '../utils/constants';
+import { en } from '../translations/en';
 
 export const paymentMethodSchema = yup.object({
-    paymentMethod: yup.string().required('Please select a payment method'),
+    paymentMethod: yup.string().required(en.requiredPaymentMethod),
     paypalEmail: yup
         .string()
         .when('paymentMethod', (paymentMethod, schema) =>
             paymentMethod[0] === PaymentMethods.PAYPAL
                 ? schema
-                      .required('PayPal Email is required')
-                      .email('Invalid email format')
+                      .required(en.requiredPayPalEmail)
+                      .email(en.invalidPayPalEmail)
                 : yup.string().nullable(),
         ),
     cardNumber: yup
@@ -22,11 +23,8 @@ export const paymentMethodSchema = yup.object({
         .when('paymentMethod', (paymentMethod, schema) =>
             paymentMethod[0] === PaymentMethods.CREDIT_CARD
                 ? schema
-                      .required('Credit Card Number is required')
-                      .matches(
-                          /^\d{16}$/,
-                          'Invalid card number. Must be 16 digits',
-                      )
+                      .required(en.requiredCardNumber)
+                      .matches(/^\d{16}$/, en.invalidCardNumber)
                 : yup.string().nullable(),
         ),
 });
@@ -47,9 +45,6 @@ const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
                 <Controller
                     name="paymentMethod"
                     control={control}
-                    rules={{
-                        required: 'Please select a payment method',
-                    }}
                     render={({ field }) => (
                         <Radio.Group id="paymentMethod" {...field}>
                             <Radio value={PaymentMethods.PAYPAL}>PayPal</Radio>

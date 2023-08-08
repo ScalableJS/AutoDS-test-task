@@ -2,24 +2,19 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Input, Alert, Form } from 'antd';
 import * as yup from 'yup';
+import { en } from '../translations/en';
 
 export const accountInfoSchema = yup.object({
-    email: yup
-        .string()
-        .required('Email is required')
-        .email('Invalid email format'),
+    email: yup.string().required(en.requiredEmail).email(en.invalidEmail),
     password: yup
         .string()
-        .required('Password is required')
-        .min(8, 'Password must be at least 8 characters')
-        .matches(
-            /^(?=.*[A-Z])(?=.*\d)/,
-            'Password must contain at least one uppercase letter and one digit',
-        ),
+        .required(en.requiredPassword)
+        .min(8, en.minLengthPassword)
+        .matches(/^(?=.*[A-Z])(?=.*\d)/, en.patternPassword),
     confirmPassword: yup
         .string()
-        .required('Confirm Password is required')
-        .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        .required(en.requiredConfirmPassword)
+        .oneOf([yup.ref('password'), null], en.passwordsMustMatch),
 });
 
 const StepAccountInfo = ({ control, errors }) => {
