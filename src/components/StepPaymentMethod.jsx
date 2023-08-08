@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Controller } from 'react-hook-form';
-import { Radio, Form } from 'antd';
+import { Radio, Form, Alert } from 'antd';
 import StepPaymentPayPal from './StepPaymentPayPal';
 import StepPaymentCreditCard from './StepPaymentCreditCard';
 import * as yup from 'yup';
@@ -32,6 +32,15 @@ export const paymentMethodSchema = yup.object({
 });
 
 const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
+    const paymentComponent = useMemo(() => {
+        if (paymentMethod === PaymentMethods.PAYPAL) {
+            return <StepPaymentPayPal control={control} errors={errors} />;
+        }
+        if (paymentMethod === PaymentMethods.CREDIT_CARD) {
+            return <StepPaymentCreditCard control={control} errors={errors} />;
+        }
+        return null;
+    }, [paymentMethod, control, errors]);
     return (
         <>
             <Form.Item label="Payment Method" htmlFor="paymentMethod" required>
@@ -50,15 +59,15 @@ const StepPaymentMethod = ({ control, paymentMethod, errors }) => {
                         </Radio.Group>
                     )}
                 />
-                {errors.paymentMethod && <p>{errors.paymentMethod.message} </p>}
+                {errors.paymentMethod && (
+                    <Alert
+                        message={errors.paymentMethod.message}
+                        type="error"
+                    />
+                )}
             </Form.Item>
 
-            {paymentMethod === PaymentMethods.PAYPAL && (
-                <StepPaymentPayPal control={control} errors={errors} />
-            )}
-            {paymentMethod === PaymentMethods.CREDIT_CARD && (
-                <StepPaymentCreditCard control={control} errors={errors} />
-            )}
+            {paymentComponent}
         </>
     );
 };

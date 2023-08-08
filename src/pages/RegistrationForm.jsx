@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
@@ -35,26 +35,29 @@ const RegistrationForm = () => {
     // Watch for changes in the paymentMethod field
     const paymentMethod = watch('paymentMethod');
 
-    const steps = [
-        {
-            title: 'Step 1: Personal Info',
-            content: <StepPersonalInfo control={control} errors={errors} />,
-        },
-        {
-            title: 'Step 2: Account Info',
-            content: <StepAccountInfo control={control} errors={errors} />,
-        },
-        {
-            title: 'Step 3: Payment Method',
-            content: (
-                <StepPaymentMethod
-                    control={control}
-                    paymentMethod={paymentMethod}
-                    errors={errors}
-                />
-            ),
-        },
-    ];
+    const steps = useMemo(
+        () => [
+            {
+                title: 'Step 1: Personal Info',
+                content: <StepPersonalInfo control={control} errors={errors} />,
+            },
+            {
+                title: 'Step 2: Account Info',
+                content: <StepAccountInfo control={control} errors={errors} />,
+            },
+            {
+                title: 'Step 3: Payment Method',
+                content: (
+                    <StepPaymentMethod
+                        control={control}
+                        paymentMethod={paymentMethod}
+                        errors={errors}
+                    />
+                ),
+            },
+        ],
+        [control, errors, paymentMethod],
+    );
 
     const nextStep = () =>
         setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
