@@ -1,7 +1,6 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import { Input, Alert, Form } from 'antd';
-import * as yup from 'yup';
 
 const StepPaymentPayPal = ({ control, errors }) => {
     return (
