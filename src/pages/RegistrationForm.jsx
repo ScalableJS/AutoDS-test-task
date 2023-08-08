@@ -14,6 +14,7 @@ import StepPaymentMethod, {
 } from '../components/StepPaymentMethod';
 import StepNavigationButtons from '../components/StepNavigationButtons';
 
+<<<<<<< HEAD
 const formatFormData = (data) => {
     const fullNameParts = data.fullName.split(' ');
 
@@ -41,6 +42,8 @@ const formatFormData = (data) => {
     return formattedData;
 };
 
+=======
+>>>>>>> 672b0b3d583dee5c0083056362a94e48256e6fde
 const RegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const schema = [personalInfoSchema, accountInfoSchema, paymentMethodSchema][
